@@ -6,50 +6,41 @@ private let panelBgColor = Color(red: 0.04, green: 0.04, blue: 0.14, opacity: 0.
 struct MainView: View {
     @EnvironmentObject var appState: AppState
     @State private var showSettings = false
-    @State private var availableWidth: CGFloat = UIScreen.main.bounds.width
-    @State private var isLandscape: Bool = UIScreen.main.bounds.width > UIScreen.main.bounds.height
-
-    private var columns: [GridItem] {
-        Array(repeating: GridItem(.flexible(), spacing: 0), count: isLandscape ? 5 : 4)
-    }
 
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView {
-                AppContentView(columns: columns)
+        GeometryReader { geo in
+            let landscape = geo.size.width > geo.size.height
+            let columns = Array(repeating: GridItem(.flexible(), spacing: 0), count: landscape ? 5 : 4)
+            VStack(spacing: 0) {
+                ScrollView {
+                    AppContentView(columns: columns)
+                }
+                BottomPanel(
+                    showSettings: $showSettings,
+                    availableWidth: geo.size.width,
+                    compact: landscape
+                )
             }
-            BottomPanel(
-                showSettings: $showSettings,
-                availableWidth: availableWidth,
-                compact: isLandscape
-            )
-        }
-        .background(WallpaperView(customImage: appState.customWallpaper).ignoresSafeArea())
-        .preferredColorScheme(.dark)
-        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-            DispatchQueue.main.async {
-                let s = UIScreen.main.bounds.size
-                availableWidth = s.width
-                isLandscape = s.width > s.height
+            .background(WallpaperView(customImage: appState.customWallpaper).ignoresSafeArea())
+            .preferredColorScheme(.dark)
+            .sheet(isPresented: $appState.isPairingSheetPresented) {
+                PairingView().interactiveDismissDisabled()
             }
-        }
-        .sheet(isPresented: $appState.isPairingSheetPresented) {
-            PairingView().interactiveDismissDisabled()
-        }
-        .sheet(isPresented: $showSettings) {
-            SettingsView()
-        }
-        .overlay(alignment: .bottom) {
-            if let feedback = appState.launchFeedback {
-                LaunchToastView(appName: feedback.appName)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .task(id: feedback.id) {
-                        try? await Task.sleep(for: .seconds(3))
-                        withAnimation { appState.launchFeedback = nil }
-                    }
+            .sheet(isPresented: $showSettings) {
+                SettingsView()
             }
+            .overlay(alignment: .bottom) {
+                if let feedback = appState.launchFeedback {
+                    LaunchToastView(appName: feedback.appName)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .task(id: feedback.id) {
+                            try? await Task.sleep(for: .seconds(3))
+                            withAnimation { appState.launchFeedback = nil }
+                        }
+                }
+            }
+            .animation(.spring(), value: appState.launchFeedback?.id)
         }
-        .animation(.spring(), value: appState.launchFeedback?.id)
     }
 }
 

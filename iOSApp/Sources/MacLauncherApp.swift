@@ -1,12 +1,12 @@
 import SwiftUI
 import GoogleMobileAds
+import AppTrackingTransparency
 
 @main
 struct MacLauncherApp: App {
     @StateObject private var appState = AppState.shared
 
     init() {
-        // AdMob SDK 초기화 (앱 실행 직후 최대한 빨리 호출)
         GADMobileAds.sharedInstance().start(completionHandler: nil)
     }
 
@@ -20,7 +20,7 @@ struct MacLauncherApp: App {
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active {
-                // 앱 목록이 없을 때만 재요청 — 목록이 있으면 유지 (사용자가 원하면 ↺ 버튼으로 수동 갱신)
+                requestATTIfNeeded()
                 if appState.remoteApps.isEmpty {
                     appState.refreshApps()
                 }
@@ -28,6 +28,13 @@ struct MacLauncherApp: App {
             } else if phase == .background {
                 UIApplication.shared.isIdleTimerDisabled = false
             }
+        }
+    }
+
+    private func requestATTIfNeeded() {
+        guard ATTrackingManager.trackingAuthorizationStatus == .notDetermined else { return }
+        Task {
+            await ATTrackingManager.requestTrackingAuthorization()
         }
     }
 }

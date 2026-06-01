@@ -55,6 +55,8 @@
     </array>
     <key>NSPrivacyTrackingUsageDescription</key>
     <string>We use ads to support the free version of the app. No personal data is collected.</string>
+    <key>NSUserTrackingUsageDescription</key>
+    <string>Allow tracking to see personalised ads and support the free version of this app.</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>UIApplicationSceneManifest</key>

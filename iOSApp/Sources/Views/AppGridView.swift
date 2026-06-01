@@ -25,14 +25,14 @@ struct AppGridView: View {
 struct AppButtonView: View {
     @EnvironmentObject var appState: AppState
     let app: RemoteApp
-    @State private var isPressed = false
 
     private let iconSize = AppState.homeScreenIconPt
     private let cornerRadius = AppState.homeScreenIconCornerRadius
 
     var body: some View {
         Button {
-            launch()
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            appState.launch(app: app)
         } label: {
             VStack(spacing: 6) {
                 app.icon
@@ -41,7 +41,6 @@ struct AppButtonView: View {
                     .frame(width: iconSize, height: iconSize)
                     .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                     .shadow(color: .black.opacity(0.3), radius: 4, y: 2)
-                    .scaleEffect(isPressed ? 0.90 : 1.0)
 
                 Text(app.name)
                     .font(.system(size: 11, weight: .regular))
@@ -54,15 +53,15 @@ struct AppButtonView: View {
             .frame(maxWidth: .infinity)
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
-        ._onButtonGesture { pressing in
-            withAnimation(.spring(response: 0.15)) { isPressed = pressing }
-        } perform: {}
+        .buttonStyle(AppIconButtonStyle())
     }
+}
 
-    private func launch() {
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        appState.launch(app: app)
+private struct AppIconButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.90 : 1.0)
+            .animation(.spring(response: 0.15), value: configuration.isPressed)
     }
 }
 

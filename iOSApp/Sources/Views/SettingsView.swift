@@ -40,10 +40,10 @@ struct SettingsView: View {
                         ) {
                             Label("Change Wallpaper", systemImage: "photo.on.rectangle")
                         }
-                        .onChange(of: wallpaperItem) { item in
-                            guard let item else { return }
+                        .onChange(of: wallpaperItem) { newItem in
+                            guard let newItem else { return }
                             Task {
-                                if let data = try? await item.loadTransferable(type: Data.self),
+                                if let data = try? await newItem.loadTransferable(type: Data.self),
                                    let image = UIImage(data: data) {
                                     await MainActor.run { appState.setWallpaper(image) }
                                 }
@@ -68,7 +68,7 @@ struct SettingsView: View {
 
                 // About
                 Section("About") {
-                    LabeledContent("Version", value: Bundle.main.shortVersionString ?? "1.0")
+                    LabeledContent("Version", value: Bundle.main.shortVersionString)
                     Link("Privacy Policy", destination: URL(string: "https://www.mackeymapper.com/")!)
                     Link("Support", destination: URL(string: "mailto:treasure0613@gmail.com")!)
                     Button("Reset Onboarding") {
@@ -113,7 +113,7 @@ private struct PremiumUpsellRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("MacLauncher Remote Premium")
+            Text("MacKeymapper Premium")
                 .font(.headline)
             Text("• Unlimited app shortcuts\n• Custom wallpaper\n• No ads\n• One-time purchase")
                 .font(.callout)

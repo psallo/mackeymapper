@@ -49,6 +49,7 @@ targets:
       - path: iOSApp/Resources/Assets.xcassets
     resources:
       - path: iOSApp/Resources/Info.plist
+      - path: iOSApp/Resources/PrivacyInfo.xcprivacy
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.maclauncher.ios

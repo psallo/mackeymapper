@@ -6,7 +6,9 @@
     <true/>
     <key>com.apple.security.network.client</key>
     <true/>
-    <!-- multicast / in-app-payments 는 유료 개발자 계정에서만 사용 가능.
-         배포 전 유료 계정으로 전환 시 아래 두 줄을 다시 추가하세요. -->
+    <key>com.apple.developer.in-app-payments</key>
+    <array>
+        <string>com.maclauncher.ios.premium</string>
+    </array>
 </dict>
 </plist>

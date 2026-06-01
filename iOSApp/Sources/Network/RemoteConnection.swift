@@ -99,16 +99,15 @@ actor RemoteConnection {
 
     private static func fingerprintForTrust(_ trust: sec_trust_t) -> String {
         let secTrust = sec_trust_copy_ref(trust).takeRetainedValue()
-        let certCount = SecTrustGetCertificateCount(secTrust)
-        guard certCount > 0 else { return "" }
-        guard let cert = SecTrustGetCertificateAtIndex(secTrust, 0) else { return "" }
+        guard let chain = SecTrustCopyCertificateChain(secTrust) as? [SecCertificate],
+              let cert = chain.first else { return "" }
         let data = SecCertificateCopyData(cert) as Data
         return CryptoHelper.sha256Hex(data)
     }
 
     // MARK: - Receive loop
 
-    private func scheduleReceive(_ conn: NWConnection) {
+    private nonisolated func scheduleReceive(_ conn: NWConnection) {
         conn.receive(minimumIncompleteLength: 1, maximumLength: 4 * 1024 * 1024) { [weak self] data, _, isDone, error in
             Task { [weak self] in
                 guard let self else { return }
