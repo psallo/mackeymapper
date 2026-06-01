@@ -1,0 +1,66 @@
+name: MacLauncherRemote
+options:
+  bundleIdPrefix: com.maclauncher
+  createIntermediateGroups: true
+  deploymentTarget:
+    macOS: "13.0"
+    iOS: "16.0"
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: true
+
+packages:
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: "2.6.0"
+  GoogleMobileAds:
+    url: https://github.com/googleads/swift-package-manager-google-mobile-ads
+    from: "11.0.0"
+
+targets:
+  MacLauncherRemote:
+    type: application
+    platform: macOS
+    sources:
+      - path: MacApp/Sources
+      - path: MacApp/Resources/Assets.xcassets
+    resources:
+      - path: MacApp/Resources/Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.maclauncher.mac
+        INFOPLIST_FILE: MacApp/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MacApp/MacApp.entitlements
+        MACOSX_DEPLOYMENT_TARGET: "13.0"
+        PRODUCT_NAME: MacLauncherRemote
+        SWIFT_VERSION: "5.0"
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: "MZZ56NN2JD"
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks"
+        ENABLE_HARDENED_RUNTIME: YES
+        COMBINE_HIDPI_IMAGES: YES
+    # dependencies:
+    #   - package: Sparkle   # 테스트 빌드에서 제거 — 배포 전 복원
+
+  MacLauncherRemoteiOS:
+    type: application
+    platform: iOS
+    sources:
+      - path: iOSApp/Sources
+      - path: iOSApp/Resources/Assets.xcassets
+    resources:
+      - path: iOSApp/Resources/Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.maclauncher.ios
+        INFOPLIST_FILE: iOSApp/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: iOSApp/iOSApp.entitlements
+        IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+        PRODUCT_NAME: MacLauncherRemote
+        SWIFT_VERSION: "5.0"
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: "MZZ56NN2JD"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SUPPORTS_MACCATALYST: NO
+    dependencies:
+      - package: GoogleMobileAds
+        product: GoogleMobileAds

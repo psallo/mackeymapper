@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>com.apple.security.app-sandbox</key>
+    <true/>
+    <key>com.apple.security.network.client</key>
+    <true/>
+    <!-- multicast / in-app-payments 는 유료 개발자 계정에서만 사용 가능.
+         배포 전 유료 계정으로 전환 시 아래 두 줄을 다시 추가하세요. -->
+</dict>
+</plist>
