@@ -6,9 +6,5 @@
     <true/>
     <key>com.apple.security.network.client</key>
     <true/>
-    <key>com.apple.developer.in-app-payments</key>
-    <array>
-        <string>com.maclauncher.ios.premium</string>
-    </array>
 </dict>
 </plist>

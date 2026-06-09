@@ -30,20 +30,12 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
-    <key>UISupportedInterfaceOrientations~ipad</key>
-    <array>
-        <string>UIInterfaceOrientationPortrait</string>
-        <string>UIInterfaceOrientationPortraitUpsideDown</string>
-        <string>UIInterfaceOrientationLandscapeLeft</string>
-        <string>UIInterfaceOrientationLandscapeRight</string>
-    </array>
     <key>NSLocalNetworkUsageDescription</key>
     <string>MacLauncher Remote needs local network access to discover and connect to your Mac.</string>
     <key>NSBonjourServices</key>
     <array>
         <string>_maclauncher._tcp.</string>
     </array>
-    <!-- AdMob: 아래는 Google 공식 테스트 App ID. 배포 전 실제 ID로 교체 필요 -->
     <key>GADApplicationIdentifier</key>
     <string>ca-app-pub-7089972556237139~9456859246</string>
     <key>SKAdNetworkItems</key>

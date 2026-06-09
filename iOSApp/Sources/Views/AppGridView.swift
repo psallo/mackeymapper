@@ -8,11 +8,12 @@ struct AppGridView: View {
 
     var body: some View {
         LazyVGrid(columns: columns, spacing: 20) {
-            ForEach(appState.displayedApps) { app in
-                AppButtonView(app: app)
-            }
-            ForEach(appState.lockedApps) { app in
-                LockedAppButtonView(app: app)
+            ForEach(Array(appState.remoteApps.enumerated()), id: \.element.id) { index, app in
+                if appState.isPremium || index < appState.freeAppLimit {
+                    AppButtonView(app: app)
+                } else {
+                    LockedAppButtonView(app: app)
+                }
             }
         }
         .padding(.horizontal, 16)

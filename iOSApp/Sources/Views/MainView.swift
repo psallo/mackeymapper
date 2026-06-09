@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import AppTrackingTransparency
 
 private let panelBgColor = Color(red: 0.04, green: 0.04, blue: 0.14, opacity: 0.90)
 
@@ -40,6 +41,11 @@ struct MainView: View {
                 }
             }
             .animation(.spring(), value: appState.launchFeedback?.id)
+            .task {
+                guard ATTrackingManager.trackingAuthorizationStatus == .notDetermined else { return }
+                try? await Task.sleep(for: .seconds(1))
+                await ATTrackingManager.requestTrackingAuthorization()
+            }
         }
     }
 }

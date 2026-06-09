@@ -37,7 +37,6 @@ private struct BannerViewRepresentable: UIViewRepresentable {
         let banner = GADBannerView(adSize: adSize)
         banner.adUnitID = kBannerAdUnitID
         banner.delegate = context.coordinator
-        // SDK가 요청 크기를 초과해 렌더링해도 SwiftUI 프레임 밖으로 넘치지 않도록 클립
         banner.clipsToBounds = true
 
         if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -45,6 +44,9 @@ private struct BannerViewRepresentable: UIViewRepresentable {
             banner.rootViewController = root
         }
 
+        #if DEBUG
+        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [GADSimulatorID]
+        #endif
         banner.load(GADRequest())
         return banner
     }

@@ -130,7 +130,7 @@ private struct PremiumUpsellRow: View {
                     }
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(store.isLoading)
+                .disabled(store.isLoading || store.product == nil)
 
                 Spacer()
 
@@ -138,6 +138,19 @@ private struct PremiumUpsellRow: View {
                     Task { await store.restorePurchases() }
                 }
                 .foregroundColor(.accentColor)
+            }
+
+            if store.product == nil && !store.isLoading {
+                HStack {
+                    Text("상품 정보를 가져오지 못했습니다.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Button("다시 시도") {
+                        Task { await store.loadProducts() }
+                    }
+                    .font(.caption)
+                }
             }
 
             if let error = store.purchaseError {
@@ -184,7 +197,14 @@ struct StoreView: View {
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
                 .padding(.horizontal, 32)
-                .disabled(store.isLoading)
+                .disabled(store.isLoading || store.product == nil)
+
+                if store.product == nil && !store.isLoading {
+                    Text("상품 정보를 불러오는 중입니다.\n잠시 후 다시 시도해주세요.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                }
 
                 Button("Restore Purchases") {
                     Task { await store.restorePurchases() }

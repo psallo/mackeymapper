@@ -20,7 +20,6 @@ struct MacLauncherApp: App {
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active {
-                requestATTIfNeeded()
                 if appState.remoteApps.isEmpty {
                     appState.refreshApps()
                 }
@@ -28,13 +27,6 @@ struct MacLauncherApp: App {
             } else if phase == .background {
                 UIApplication.shared.isIdleTimerDisabled = false
             }
-        }
-    }
-
-    private func requestATTIfNeeded() {
-        guard ATTrackingManager.trackingAuthorizationStatus == .notDetermined else { return }
-        Task {
-            await ATTrackingManager.requestTrackingAuthorization()
         }
     }
 }
