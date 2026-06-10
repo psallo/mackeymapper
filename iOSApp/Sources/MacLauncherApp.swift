@@ -16,7 +16,10 @@ struct MacLauncherApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(appState)
-                .onAppear { appState.start() }
+                .onAppear {
+                    appState.start()
+                    PurchaseManager.shared.startTransactionObserver()
+                }
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active {

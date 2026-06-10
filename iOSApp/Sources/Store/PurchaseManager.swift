@@ -13,6 +13,19 @@ final class PurchaseManager: ObservableObject {
     @Published var isLoading = false
     @Published var purchaseError: String?
 
+    // MARK: - Transaction Observer
+
+    func startTransactionObserver() {
+        Task {
+            for await result in Transaction.updates {
+                guard case .verified(let tx) = result,
+                      tx.productID == kPremiumProductId else { continue }
+                AppState.shared.unlockPremium()
+                await tx.finish()
+            }
+        }
+    }
+
     // MARK: - Lifecycle
 
     func loadProducts() async {
