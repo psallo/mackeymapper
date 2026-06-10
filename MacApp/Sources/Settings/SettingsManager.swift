@@ -90,6 +90,9 @@ final class SettingsManager {
 
     func regeneratePIN() {
         defaults.set(generateDefaultPIN(), forKey: Key.pin)
+        allowedDeviceIDs = []
+        allowedDeviceNames = [:]
+        NotificationCenter.default.post(name: Self.devicesDidChangeNotification, object: nil)
     }
 
     // MARK: - Private
