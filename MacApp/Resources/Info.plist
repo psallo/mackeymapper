@@ -9,9 +9,9 @@
     <key>CFBundleDisplayName</key>
     <string>MacKeymapper</string>
     <key>CFBundleVersion</key>
-    <string>1</string>
+    <string>2</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0.0</string>
+    <string>1.0.1</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundlePackageType</key>
@@ -27,13 +27,9 @@
     <key>LSMinimumSystemVersion</key>
     <string>13.0</string>
     <key>NSHumanReadableCopyright</key>
-    <string>Copyright © 2025 MacLauncher. All rights reserved.</string>
-    <key>SUFeedURL</key>
-    <string>https://your-website.com/appcast.xml</string>
-    <key>SUPublicEDKey</key>
-    <string>REPLACE_WITH_SPARKLE_EDKEY</string>
+    <string>Copyright © 2026 MacKeymapper. All rights reserved.</string>
     <key>NSLocalNetworkUsageDescription</key>
-    <string>MacLauncher Remote uses the local network to communicate with the iOS companion app.</string>
+    <string>MacKeymapper uses the local network to communicate with the iOS companion app.</string>
     <key>NSBonjourServices</key>
     <array>
         <string>_maclauncher._tcp.</string>
