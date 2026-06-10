@@ -38,8 +38,8 @@ targets:
         LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks"
         ENABLE_HARDENED_RUNTIME: YES
         COMBINE_HIDPI_IMAGES: YES
-    # dependencies:
-    #   - package: Sparkle   # 테스트 빌드에서 제거 — 배포 전 복원
+    dependencies:
+      - package: Sparkle
 
   MacLauncherRemoteiOS:
     type: application

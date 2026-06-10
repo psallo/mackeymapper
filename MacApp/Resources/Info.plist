@@ -28,6 +28,10 @@
     <string>13.0</string>
     <key>NSHumanReadableCopyright</key>
     <string>Copyright © 2026 MacKeymapper. All rights reserved.</string>
+    <key>SUFeedURL</key>
+    <string>https://www.mackeymapper.com/appcast.xml</string>
+    <key>SUPublicEDKey</key>
+    <string>REQM9gxnlNKIwGSPzi5eIQxqRu8r+uSrPvugjn9ramo=</string>
     <key>NSLocalNetworkUsageDescription</key>
     <string>MacKeymapper uses the local network to communicate with the iOS companion app.</string>
     <key>NSBonjourServices</key>
